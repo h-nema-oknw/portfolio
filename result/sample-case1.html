@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>案1 サンプル — Astro + Tailwind + GSAP スタイル</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:       #080808;
+      --bg2:      #101010;
+      --text:     #F0EDE8;
+      --muted:    #7A7570;
+      --gold:     #C9A35A;
+      --terra:    #C17F59;
+      --olive:    #7A8B5A;
+      --border:   rgba(201,163,90,0.18);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+    }
+    body.light {
+      --bg: #F2EDE3;
+      --bg2: #EBE4D8;
+      --text: #1A1612;
+      --muted: #6B6055;
+      --border: rgba(100,80,40,0.18);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top:0; left:0; right:0; z-index:100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 4rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(8,8,8,0.75);
+      backdrop-filter: blur(14px);
+      transition: background 0.4s;
+    }
+    body.light nav { background: rgba(242,237,227,0.8); }
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: .8rem; letter-spacing: .22em;
+      color: var(--gold); text-transform: uppercase;
+    }
+    .nav-links { display:flex; gap:2.5rem; list-style:none; }
+    .nav-links a {
+      text-decoration:none; color:var(--muted);
+      font-size:.75rem; letter-spacing:.18em; text-transform:uppercase;
+      transition:color .25s;
+    }
+    .nav-links a:hover { color:var(--gold); }
+    .mode-btn {
+      background:none; border:1px solid var(--border);
+      color:var(--muted); cursor:pointer; padding:.45rem 1rem;
+      font-family:'Space Mono',monospace; font-size:.65rem;
+      letter-spacing:.12em; text-transform:uppercase;
+      transition:all .25s;
+    }
+    .mode-btn:hover { border-color:var(--gold); color:var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; display:flex; flex-direction:column;
+      justify-content:center; padding: 0 4rem;
+      position:relative; overflow:hidden;
+    }
+    .hero-line-left {
+      position:absolute; left:0; top:0; bottom:0;
+      width:1px; background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      opacity:.3;
+    }
+    .hero-label {
+      font-family:'Space Mono',monospace;
+      font-size:.72rem; letter-spacing:.32em; color:var(--gold);
+      text-transform:uppercase; margin-bottom:2.5rem; opacity:0;
+    }
+    .hero-title {
+      font-size: clamp(3.5rem,9vw,9rem);
+      font-weight:700; line-height:.92; letter-spacing:-.025em;
+    }
+    .hero-title .line { overflow:hidden; display:block; }
+    .hero-title .line span { display:block; transform:translateY(105%); }
+    .hero-title .accent { color:var(--gold); }
+    .hero-sub {
+      margin-top:.8rem;
+      font-size: clamp(1rem,2vw,1.35rem);
+      font-weight:300; color:var(--muted); letter-spacing:.08em;
+      overflow:hidden;
+    }
+    .hero-sub span { display:block; transform:translateY(105%); }
+    .hero-desc {
+      margin-top:3rem; max-width:480px;
+      color:var(--muted); font-size:.95rem; line-height:1.8; opacity:0;
+    }
+    .hero-cta { margin-top:2.5rem; display:flex; gap:1rem; opacity:0; }
+    .btn {
+      padding:.85rem 2rem; text-decoration:none;
+      font-size:.8rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+      transition:all .3s;
+    }
+    .btn-fill { background:var(--gold); color:var(--bg); }
+    .btn-fill:hover { box-shadow:0 8px 32px rgba(201,163,90,.35); transform:translateY(-2px); }
+    .btn-outline { border:1px solid var(--border); color:var(--muted); }
+    .btn-outline:hover { border-color:var(--gold); color:var(--gold); }
+    .hero-scroll {
+      position:absolute; bottom:3rem; right:4rem;
+      font-family:'Space Mono',monospace; font-size:.65rem;
+      letter-spacing:.25em; color:var(--muted);
+      writing-mode:vertical-rl; opacity:0;
+    }
+    .hero-num {
+      position:absolute; bottom:3rem; left:4rem;
+      font-family:'Space Mono',monospace; font-size:.65rem;
+      letter-spacing:.15em; color:var(--muted); opacity:0;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      overflow:hidden; border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border); padding:.9rem 0;
+      background:var(--bg2);
+    }
+    .marquee-inner { display:flex; gap:2.5rem; white-space:nowrap; width:max-content; }
+    .m-tag {
+      font-family:'Space Mono',monospace; font-size:.7rem;
+      letter-spacing:.2em; color:var(--muted); text-transform:uppercase; flex-shrink:0;
+    }
+    .m-sep { color:var(--gold); margin:0 .5rem; }
+
+    /* ── SECTION BASE ── */
+    .section { padding:8rem 4rem; }
+    .s-label {
+      font-family:'Space Mono',monospace; font-size:.68rem;
+      letter-spacing:.3em; color:var(--gold); text-transform:uppercase;
+      display:flex; align-items:center; gap:1rem; margin-bottom:4rem; opacity:0;
+    }
+    .s-label::after { content:''; height:1px; width:3rem; background:var(--gold); }
+    .s-title {
+      font-size:clamp(2rem,4vw,3.5rem); font-weight:700;
+      line-height:1.05; letter-spacing:-.02em; margin-bottom:3rem;
+    }
+    .s-title .accent { color:var(--gold); }
+
+    /* ── ABOUT ── */
+    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
+    .about-p { color:var(--muted); line-height:1.85; margin-bottom:1.5rem; font-size:.95rem; opacity:0; }
+    .stats { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1rem; }
+    .stat {
+      border:1px solid var(--border); padding:2rem 1.5rem; opacity:0;
+      transition:border-color .3s;
+    }
+    .stat:hover { border-color:var(--gold); }
+    .stat-n { font-size:2.8rem; font-weight:700; color:var(--gold); font-family:'Space Mono',monospace; line-height:1; }
+    .stat-unit { font-size:1.2rem; color:var(--terra); }
+    .stat-l { font-size:.7rem; letter-spacing:.18em; color:var(--muted); text-transform:uppercase; margin-top:.4rem; }
+
+    /* ── SKILLS ── */
+    .skills-bg { background:var(--bg2); }
+    .skills-grid {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:1px; background:var(--border);
+      border:1px solid var(--border);
+    }
+    .sk {
+      background:var(--bg2); padding:2.5rem 2rem; opacity:0;
+      transition:background .3s; cursor:default;
+    }
+    .sk:hover { background:#181818; }
+    body.light .sk { background:var(--bg2); }
+    body.light .sk:hover { background:#E5DDD0; }
+    .sk-cat { font-family:'Space Mono',monospace; font-size:.65rem; letter-spacing:.2em; color:var(--terra); text-transform:uppercase; margin-bottom:.8rem; }
+    .sk-name { font-size:1.15rem; font-weight:600; margin-bottom:.25rem; }
+    .sk-yr { font-family:'Space Mono',monospace; font-size:.72rem; color:var(--muted); }
+    .sk-bar-bg { height:2px; background:rgba(255,255,255,.08); margin-top:1.5rem; }
+    body.light .sk-bar-bg { background:rgba(0,0,0,.1); }
+    .sk-bar { height:100%; background:var(--gold); width:0; transition:width 1.4s cubic-bezier(.25,1,.5,1); }
+
+    /* ── WORKS ── */
+    .work-item {
+      display:grid; grid-template-columns:72px 1fr auto;
+      align-items:center; gap:2rem;
+      padding:2rem 0; border-bottom:1px solid var(--border);
+      opacity:0; cursor:pointer; transition:padding-left .3s;
+    }
+    .work-item:first-child { border-top:1px solid var(--border); }
+    .work-item:hover { padding-left:1.2rem; }
+    .w-num { font-family:'Space Mono',monospace; font-size:.72rem; color:var(--muted); letter-spacing:.08em; }
+    .w-title { font-size:1.05rem; font-weight:600; }
+    .w-sub { font-size:.78rem; color:var(--muted); margin-top:.3rem; }
+    .w-tag {
+      font-family:'Space Mono',monospace; font-size:.62rem;
+      letter-spacing:.14em; padding:.35rem .9rem;
+      border:1px solid var(--border); color:var(--muted); text-transform:uppercase;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding:4rem 4rem;
+      border-top:1px solid var(--border);
+      display:flex; justify-content:space-between; align-items:center;
+    }
+    .f-logo { font-family:'Space Mono',monospace; font-size:.75rem; letter-spacing:.2em; color:var(--gold); }
+    .f-copy { font-family:'Space Mono',monospace; font-size:.65rem; color:var(--muted); letter-spacing:.12em; }
+
+    /* ── BADGE ── */
+    .badge {
+      position:fixed; bottom:2rem; left:2rem; z-index:999;
+      font-family:'Space Mono',monospace; font-size:.65rem; letter-spacing:.18em;
+      background:var(--gold); color:#080808;
+      padding:.4rem 1rem; pointer-events:none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:768px){
+      nav { padding:1.2rem 1.5rem; }
+      .nav-links { display:none; }
+      .hero { padding:0 1.5rem; }
+      .section { padding:5rem 1.5rem; }
+      .about-grid { grid-template-columns:1fr; gap:3rem; }
+      .skills-grid { grid-template-columns:1fr 1fr; }
+      .work-item { grid-template-columns:50px 1fr; }
+      .w-tag { display:none; }
+      footer { flex-direction:column; gap:1rem; text-align:center; }
+    }
+    @media(max-width:480px){
+      .skills-grid { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="badge">案1 — GSAP SAMPLE</div>
+
+  <nav>
+    <span class="nav-logo">D.NEMA // PORTFOLIO</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#works">Works</a></li>
+      <li><a href="#blog">Blog</a></li>
+    </ul>
+    <button class="mode-btn" onclick="document.body.classList.toggle('light')">☀ MODE</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-line-left"></div>
+    <p class="hero-label">Full-Stack Engineer — Okinawa, JP</p>
+    <h1 class="hero-title">
+      <span class="line"><span>DAIKI</span></span>
+      <span class="line"><span class="accent">NEMA.</span></span>
+    </h1>
+    <p class="hero-sub"><span>Engineer / Creator / AI Native</span></p>
+    <p class="hero-desc">
+      LPG 販売管理システムから Web アプリまで、<br>
+      要件定義〜運用保守をワンオペで担う<br>
+      フルスタックエンジニア。生成 AI 活用推進中。
+    </p>
+    <div class="hero-cta">
+      <a href="#works" class="btn btn-fill">View Works</a>
+      <a href="mailto:" class="btn btn-outline">Contact</a>
+    </div>
+    <span class="hero-scroll">Scroll Down</span>
+    <span class="hero-num">2017 — Present</span>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-inner" id="mq">
+      <span class="m-tag">VBA<span class="m-sep">◆</span></span>
+      <span class="m-tag">T-SQL<span class="m-sep">◆</span></span>
+      <span class="m-tag">PHP<span class="m-sep">◆</span></span>
+      <span class="m-tag">JavaScript<span class="m-sep">◆</span></span>
+      <span class="m-tag">HTML / CSS<span class="m-sep">◆</span></span>
+      <span class="m-tag">SQL Server<span class="m-sep">◆</span></span>
+      <span class="m-tag">Claude Code<span class="m-sep">◆</span></span>
+      <span class="m-tag">GitHub<span class="m-sep">◆</span></span>
+      <span class="m-tag">VBA<span class="m-sep">◆</span></span>
+      <span class="m-tag">T-SQL<span class="m-sep">◆</span></span>
+      <span class="m-tag">PHP<span class="m-sep">◆</span></span>
+      <span class="m-tag">JavaScript<span class="m-sep">◆</span></span>
+      <span class="m-tag">HTML / CSS<span class="m-sep">◆</span></span>
+      <span class="m-tag">SQL Server<span class="m-sep">◆</span></span>
+      <span class="m-tag">Claude Code<span class="m-sep">◆</span></span>
+      <span class="m-tag">GitHub<span class="m-sep">◆</span></span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <span class="s-label">01 — About</span>
+    <div class="about-grid">
+      <div>
+        <h2 class="s-title">Engineer<br><span class="accent">&amp; Creator.</span></h2>
+        <p class="about-p">2017年より沖縄情報システム株式会社にてエンジニアとして従事。LPG 販売管理システム（SILPS）の開発・保守を中心に、500件以上の納品実績を持つ。</p>
+        <p class="about-p">要件定義から運用保守まで一気通貫で担当するフルスタック志向。生成 AI の社内導入を主導し、Claude Code・GitHub Copilot を開発の主力ツールとして活用している。</p>
+        <p class="about-p">前職以前はプロダンサー・インストラクターとして活動。教育・伝達のスキルもエンジニアとしての強みの一つ。</p>
+      </div>
+      <div>
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-n">500<span class="stat-unit">+</span></div>
+            <div class="stat-l">Deliveries</div>
+          </div>
+          <div class="stat">
+            <div class="stat-n">8<span class="stat-unit">yr</span></div>
+            <div class="stat-l">Experience</div>
+          </div>
+          <div class="stat">
+            <div class="stat-n">7<span class="stat-unit">+</span></div>
+            <div class="stat-l">Languages</div>
+          </div>
+          <div class="stat">
+            <div class="stat-n">AI<span class="stat-unit">×</span></div>
+            <div class="stat-l">Dev Native</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section skills-bg" id="skills">
+    <span class="s-label">02 — Skills</span>
+    <h2 class="s-title">Technical<br><span class="accent">Stack.</span></h2>
+    <div class="skills-grid">
+      <div class="sk"><div class="sk-cat">Backend</div><div class="sk-name">VBA / Access</div><div class="sk-yr">8 years</div><div class="sk-bar-bg"><div class="sk-bar" data-w="95"></div></div></div>
+      <div class="sk"><div class="sk-cat">Database</div><div class="sk-name">T-SQL / SQL Server</div><div class="sk-yr">8 years</div><div class="sk-bar-bg"><div class="sk-bar" data-w="90"></div></div></div>
+      <div class="sk"><div class="sk-cat">Backend</div><div class="sk-name">PHP</div><div class="sk-yr">7 years</div><div class="sk-bar-bg"><div class="sk-bar" data-w="85"></div></div></div>
+      <div class="sk"><div class="sk-cat">Frontend</div><div class="sk-name">JavaScript</div><div class="sk-yr">7 years</div><div class="sk-bar-bg"><div class="sk-bar" data-w="80"></div></div></div>
+      <div class="sk"><div class="sk-cat">Frontend</div><div class="sk-name">HTML / CSS</div><div class="sk-yr">7 years</div><div class="sk-bar-bg"><div class="sk-bar" data-w="85"></div></div></div>
+      <div class="sk"><div class="sk-cat">AI × Dev</div><div class="sk-name">Claude Code / Copilot</div><div class="sk-yr">1 year</div><div class="sk-bar-bg"><div class="sk-bar" data-w="75"></div></div></div>
+    </div>
+  </section>
+
+  <!-- WORKS -->
+  <section class="section" id="works">
+    <span class="s-label">03 — Works</span>
+    <h2 class="s-title">Selected<br><span class="accent">Works.</span></h2>
+    <div>
+      <div class="work-item"><span class="w-num">01</span><div><div class="w-title">SILPS — LPG 販売管理システム</div><div class="w-sub">Access VBA + SQL Server + PHP / 2018—現在</div></div><span class="w-tag">Business System</span></div>
+      <div class="work-item"><span class="w-num">02</span><div><div class="w-title">OIS-Web — Web 管理システム</div><div class="w-sub">PHP + AngularJS + SQL Server / 2019—現在</div></div><span class="w-tag">Web App</span></div>
+      <div class="work-item"><span class="w-num">03</span><div><div class="w-title">ハンディ端末システム</div><div class="w-sub">VBS + SQL Server / 2020—</div></div><span class="w-tag">Device App</span></div>
+      <div class="work-item"><span class="w-num">04</span><div><div class="w-title">ネットワーク構築支援</div><div class="w-sub">ユーザー環境構築 / VPN 設定</div></div><span class="w-tag">Infrastructure</span></div>
+    </div>
+  </section>
+
+  <!-- BLOG PLACEHOLDER -->
+  <section class="section skills-bg" id="blog">
+    <span class="s-label">04 — Blog</span>
+    <h2 class="s-title">Latest<br><span class="accent">Posts.</span></h2>
+    <p style="color:var(--muted); font-size:.9rem; line-height:1.8;">
+      技術メモ・AI活用事例・業務改善ナレッジなどを不定期に更新予定。
+    </p>
+  </section>
+
+  <footer>
+    <span class="f-logo">D.NEMA // 2026</span>
+    <span class="f-copy">© Daiki Nema — All Rights Reserved</span>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ── Hero timeline
+    const tl = gsap.timeline({ defaults:{ ease:'power4.out' } });
+    tl.to('.hero-label',             { opacity:1, y:0,     duration:.8, delay:.3 })
+      .to('.hero-title .line span',  { y:'0%',             duration:1,  stagger:.12 }, '-=.5')
+      .to('.hero-sub span',          { y:'0%',             duration:.8 },              '-=.5')
+      .to('.hero-desc',              { opacity:1, y:0,     duration:.8 },              '-=.4')
+      .to('.hero-cta',               { opacity:1, y:0,     duration:.8 },              '-=.5')
+      .to(['.hero-scroll','.hero-num'],{ opacity:1,        duration:.8 },              '-=.4');
+
+    // ── Marquee
+    gsap.to('#mq', { x:'-50%', duration:22, ease:'none', repeat:-1 });
+
+    // ── Section labels
+    gsap.utils.toArray('.s-label').forEach(el => {
+      gsap.to(el, { opacity:1, x:0, duration:.8,
+        scrollTrigger:{ trigger:el, start:'top 88%' } });
+    });
+
+    // ── About paragraphs
+    gsap.utils.toArray('.about-p').forEach((el,i) => {
+      gsap.to(el, { opacity:1, y:0, duration:.8, delay:i*.12,
+        scrollTrigger:{ trigger:el, start:'top 88%' } });
+    });
+
+    // ── Stats
+    gsap.utils.toArray('.stat').forEach((el,i) => {
+      gsap.to(el, { opacity:1, y:0, duration:.6, delay:i*.1,
+        scrollTrigger:{ trigger:el, start:'top 88%' } });
+    });
+
+    // ── Skills
+    gsap.utils.toArray('.sk').forEach((el,i) => {
+      ScrollTrigger.create({
+        trigger: el, start:'top 88%',
+        onEnter:() => {
+          gsap.to(el, { opacity:1, y:0, duration:.6, delay:i*.07 });
+          const bar = el.querySelector('.sk-bar');
+          if(bar) gsap.to(bar, { width: bar.dataset.w+'%', duration:1.5, delay:.3+i*.05, ease:'power2.out' });
+        }
+      });
+    });
+
+    // ── Works
+    gsap.utils.toArray('.work-item').forEach((el,i) => {
+      gsap.to(el, { opacity:1, x:0, duration:.6, delay:i*.1,
+        scrollTrigger:{ trigger:el, start:'top 90%' } });
+    });
+  </script>
+</body>
+</html>
