@@ -18,21 +18,21 @@
 
 ---
 
-## Phase 2: プロジェクト基盤構築【未着手】
+## Phase 2: プロジェクト基盤構築【完了】
 
 **目標**: Vite プロジェクトを初期化し、GitHub Actions デプロイ環境を整え、デザイントークン・共通レイアウトを構築する。
 
 | タスク | 状態 |
 |---|---|
-| Vite プロジェクト初期化（`result/portfolio/`） | 未着手 |
-| package.json・vite.config.js の設定（base: /portfolio/）| 未着手 |
-| GitHub Actions デプロイワークフロー作成（deploy.yml） | 未着手 |
-| CSS カスタムプロパティ定義（カラー・フォント・アニメーション値） | 未着手 |
-| グローバルスタイル・リセット CSS の作成 | 未着手 |
-| index.html の骨格作成（セクション構造・SEO メタ情報） | 未着手 |
-| フォント（Space Grotesk / Space Mono）の導入 | 未着手 |
-| コンテンツデータファイル作成（`src/data/content.js`） | 未着手 |
-| プレースホルダー画像の配置（profile・logo・works） | 未着手 |
+| Vite プロジェクト初期化（`result/portfolio/`） | 完了 |
+| package.json・vite.config.js の設定（base: /portfolio/）| 完了 |
+| GitHub Actions デプロイワークフロー作成（deploy.yml） | 完了 |
+| CSS カスタムプロパティ定義（カラー・フォント・アニメーション値） | 完了 |
+| グローバルスタイル・リセット CSS の作成 | 完了 |
+| index.html の骨格作成（セクション構造・SEO メタ情報） | 完了 |
+| フォント（Space Grotesk / Space Mono）の導入 | 完了 |
+| コンテンツデータファイル作成（`src/data/content.js`） | 完了 |
+| プレースホルダー画像の配置（profile・logo・works） | 完了 |
 
 ---
 

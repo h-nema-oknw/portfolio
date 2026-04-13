@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="40" viewBox="0 0 120 40">
+  <rect width="120" height="40" fill="none"/>
+  <text x="4" y="28" fill="#C9A35A" font-family="monospace" font-size="22" font-weight="700" letter-spacing="2">DN</text>
+  <rect x="38" y="10" width="1" height="20" fill="#C9A35A" opacity="0.4"/>
+  <text x="46" y="22" fill="#6A6560" font-family="monospace" font-size="9" letter-spacing="1">PORTFOLIO</text>
+</svg>
