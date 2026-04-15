@@ -1,12 +1,14 @@
 import './style.css';
-import { initParticles } from './modules/particles.js';
+import { initRenderer }   from './modules/renderer.js';
+import { initParticles }  from './modules/particles.js';
 import { initAnimations } from './modules/animations.js';
-import { initDarkMode } from './modules/darkMode.js';
+import { initDarkMode }   from './modules/darkMode.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+  initRenderer();   // コンテンツを先にレンダリング
   initDarkMode();
   initParticles();
-  initAnimations();
+  initAnimations(); // レンダリング後にアニメーション初期化
 });
 
 // ローディングオーバーレイを非表示（CSS アニメーション完了後）

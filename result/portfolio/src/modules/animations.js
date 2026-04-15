@@ -6,6 +6,17 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function initAnimations() {
 
+  // ── 初期状態セットアップ ─────────────────────────────────────
+  gsap.set('.s-label',     { x: -20, opacity: 0 });
+  gsap.set('.card-3d',     { y: 30,  opacity: 0 });
+  gsap.set('.about-p',     { y: 20,  opacity: 0 });
+  gsap.set('.terminal',    { y: 20,  opacity: 0 });
+  gsap.set('.career-item', { y: 20,  opacity: 0 });
+  gsap.set('.quals',       { y: 20,  opacity: 0 });
+  gsap.set('.sk-row',      { x: -20, opacity: 0 });
+  gsap.set('.work-item',   { x: -20, opacity: 0 });
+  gsap.set('.link-card',   { y: 20,  opacity: 0 });
+
   // ── Hero テキストリビール（duration: 1.0s, stagger: 0.12s, ease: power4.out）
   const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
   tl.to('.hero-label',
@@ -112,4 +123,15 @@ export function initAnimations() {
       scrollTrigger: { trigger: el, start: 'top 90%' },
     });
   });
+
+  // ── マーキー（22s、GSAP repeat: -1）─────────────────────────
+  const marqueeTrack = document.querySelector('.marquee-track');
+  if (marqueeTrack) {
+    gsap.to(marqueeTrack, {
+      x: '-50%',
+      duration: 22,
+      ease: 'none',
+      repeat: -1,
+    });
+  }
 }

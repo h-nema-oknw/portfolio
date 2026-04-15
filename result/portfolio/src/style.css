@@ -931,6 +931,54 @@ footer {
   border: 0;
 }
 
+/* ── マーキー ── */
+.marquee-wrap {
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 0.8rem 0;
+  margin-bottom: 3rem;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 2.5rem;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.marquee-track span {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.marquee-track span::before {
+  content: '◆';
+  margin-right: 2.5rem;
+  color: var(--gold);
+  opacity: 0.4;
+}
+
+/* ── タブレット ── */
+@media (max-width: 1024px) {
+  #nav { padding: 1.2rem 2rem; }
+  .container { padding: 0 2rem; }
+
+  .about-body { gap: 2rem; }
+
+  .sk-row { grid-template-columns: 180px 1fr 60px; gap: 1.2rem; }
+
+  .career-item { grid-template-columns: 160px 1fr; gap: 1.5rem; }
+
+  .work-item { grid-template-columns: 60px 1fr auto; }
+}
+
 /* ── レスポンシブ ── */
 @media (max-width: 768px) {
   #nav { padding: 1.2rem 1.5rem; }

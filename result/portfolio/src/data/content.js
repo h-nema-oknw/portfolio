@@ -5,8 +5,8 @@ export const profile = {
   name: { en: 'Hiroki Nema', ja: '根間 大輝' },
   title: 'Full-Stack Engineer',
   location: 'Okinawa, JP',
-  email: '',          // 後から設定
-  github: '',         // 後から設定
+  email: 'drunkhouse.k29h@gmai.com',
+  github: 'https://github.com/h-nema-oknw',
   description:
     '沖縄を拠点に活動するフルスタックエンジニア。' +
     '業務系システム（VBA / Access / PHP / SQL Server）の設計・開発・保守を中心に、' +
@@ -65,6 +65,14 @@ export const career = [
       'この経験が後の研修講師・プレゼンテーション能力の基盤となっている。',
     tags: ['Dance', 'Instruction', 'Education'],
   },
+  {
+    period: '2009.04 — 2013.03',
+    company: '沖縄大学',
+    role: '人文学部 国際コミュニケーション学科',
+    description:
+      '国際コミュニケーションを専攻。在学中よりストリートダンス活動を並行し、卒業後はダンサーとしてのキャリアをスタート。',
+    tags: ['Communication', 'International Studies'],
+  },
 ];
 
 // 資格
@@ -102,6 +110,7 @@ export const works = [
 
 // リンク
 export const links = [
-  { label: 'GitHub', url: '',          icon: 'github' },  // 後から設定
-  { label: 'Email',  url: 'mailto:',   icon: 'mail'   },  // 後から設定
+  { label: 'GitHub',    url: 'https://github.com/h-nema-oknw',          icon: 'github'   },
+  { label: 'Wantedly', url: 'https://www.wantedly.com/id/hiroki_nema',  icon: 'wantedly' },
+  { label: 'Email',    url: 'mailto:drunkhouse.k29h@gmai.com',          icon: 'mail'     },
 ];
