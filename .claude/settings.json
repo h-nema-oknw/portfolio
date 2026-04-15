@@ -1,0 +1,14 @@
+{
+  "allowedTools": [
+    "Bash(git status)",
+    "Bash(git branch --show-current)",
+    "Bash(git add result/*)",
+    "Bash(git add agents/phases/*)",
+    "Bash(git add reports/*)",
+    "Bash(git add docs/phases.md)",
+    "Bash(git add config/git-policy.md)",
+    "Bash(git commit -m *)",
+    "Bash(git push origin *)",
+    "Bash(gh pr create *)"
+  ]
+}
