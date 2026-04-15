@@ -5,7 +5,7 @@ export const profile = {
   name: { en: 'Hiroki Nema', ja: '根間 大輝' },
   title: 'Full-Stack Engineer',
   location: 'Okinawa, JP',
-  email: 'drunkhouse.k29h@gmai.com',
+  email: 'drunkhouse.k29h@gmail.com',
   github: 'https://github.com/h-nema-oknw',
   description:
     '沖縄を拠点に活動するフルスタックエンジニア。' +
@@ -112,5 +112,5 @@ export const works = [
 export const links = [
   { label: 'GitHub',    url: 'https://github.com/h-nema-oknw',          icon: 'github'   },
   { label: 'Wantedly', url: 'https://www.wantedly.com/id/hiroki_nema',  icon: 'wantedly' },
-  { label: 'Email',    url: 'mailto:drunkhouse.k29h@gmai.com',          icon: 'mail'     },
+  { label: 'Email',    url: 'mailto:drunkhouse.k29h@gmail.com',         icon: 'mail'     },
 ];
