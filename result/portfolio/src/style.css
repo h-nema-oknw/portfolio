@@ -571,7 +571,13 @@ section { padding: 8rem 0; }
 .t-prompt { color: var(--gold); }
 .t-cmd    { color: var(--text); }
 .t-out    { color: var(--muted); }
-.t-accent { color: var(--terra); }
+.t-accent { color: var(--gold); }
+.t-flag   { color: var(--olive); }
+.t-tag    { color: var(--terra); }
+.t-key    { color: var(--terra); }
+.t-val    { color: var(--olive); }
+.t-func   { color: var(--text); }
+.t-punct  { color: var(--muted); }
 
 .t-cursor {
   animation: blink 1s step-end infinite;
@@ -781,7 +787,39 @@ section { padding: 8rem 0; }
   align-items: center;
 }
 
-.work-item:first-child { border-top: 1px solid var(--border); }
+.works-category {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  text-transform: uppercase;
+  padding: 2rem 0 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.works-category:first-child { margin-top: 0; }
+
+.w-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+}
+
+.w-link {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--gold);
+  text-decoration: none;
+  border: 1px solid var(--gold);
+  padding: 0.2rem 0.65rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+.w-link:hover {
+  background: var(--gold);
+  color: var(--bg);
+}
 
 .work-item::before {
   content: '';
@@ -801,19 +839,38 @@ section { padding: 8rem 0; }
 .w-num {
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  color: var(--muted);
+  color: var(--gold);
 }
 
 .w-title {
   font-size: 1.05rem;
   font-weight: 600;
   margin-bottom: 0.3rem;
+  color: var(--gold);
 }
 
 .w-sub {
   font-size: 0.78rem;
-  color: var(--muted);
+  color: var(--text-current);
   margin-bottom: 0.6rem;
+}
+
+.w-devices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.5rem;
+}
+
+.w-device {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  text-transform: uppercase;
+  background: rgba(201, 163, 90, 0.08);
 }
 
 .w-stack {

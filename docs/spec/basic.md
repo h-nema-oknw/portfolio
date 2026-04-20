@@ -48,9 +48,11 @@ index.html
   ├── index.html
   └── style.css
        ↓ vite build
-[GitHub リポジトリ: portfolio]
-  dist/  ← 静的ファイル
-       ↓ GitHub Actions (gh-pages branch へデプロイ)
+[dev_Portfolio（非公開）: result/portfolio/dist/]
+       ↓ 手動コピー → portfolio ローカルディレクトリ → git push
+[GitHub リポジトリ: portfolio（公開）]
+  main branch ← 静的ファイル
+       ↓ GitHub Pages
 [GitHub Pages]
   https://{username}.github.io/portfolio/
 ```

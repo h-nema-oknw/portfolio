@@ -10,23 +10,23 @@ export const profile = {
   description:
     '沖縄を拠点に活動するフルスタックエンジニア。' +
     '業務系システム（VBA / Access / PHP / SQL Server）の設計・開発・保守を中心に、' +
-    'AI ツール活用を組み合わせた開発効率化にも取り組んでいる。',
+    'AI駆動開発を組み合わせた開発を行っている。',
 };
 
 // About セクション: 数値カード × 3
 export const stats = [
-  { value: '8',   label: 'Years Experience' },
-  { value: 'AI×', label: 'AI Native Dev'    },
-  { value: 'Pro', label: 'Former Dancer'    },
+  { value: '8', label: 'Years Experience' },
+  { value: 'AI×', label: 'AI Native Dev' },
+  { value: 'Pro', label: 'Former Dancer' },
 ];
 
 // スキル（docs/spec/detail.md Section 4 の 6 項目）
 export const skills = [
-  { name: 'VBA / Access',         category: 'BACKEND',   years: 8, level: 95 },
-  { name: 'T-SQL / SQL Server',   category: 'DATABASE',  years: 8, level: 90 },
-  { name: 'PHP',                  category: 'BACKEND',   years: 7, level: 85 },
-  { name: 'JavaScript',           category: 'FRONTEND',  years: 7, level: 80 },
-  { name: 'HTML / CSS',           category: 'FRONTEND',  years: 7, level: 85 },
+  { name: 'VBA / Access', category: 'BACKEND', years: 8, level: 95 },
+  { name: 'T-SQL / SQL Server', category: 'DATABASE', years: 8, level: 90 },
+  { name: 'PHP', category: 'BACKEND', years: 7, level: 85 },
+  { name: 'JavaScript', category: 'FRONTEND', years: 7, level: 80 },
+  { name: 'HTML / CSS', category: 'FRONTEND', years: 7, level: 85 },
   { name: 'Claude Code / Copilot', category: 'AI × DEV', years: 1, level: 75 },
 ];
 
@@ -34,10 +34,10 @@ export const skills = [
 export const career = [
   {
     period: '2017.08 — Present',
-    company: '沖縄情報システム株式会社',
+    company: '沖縄のプロダクト企業',
     role: 'Software Engineer（派遣→正社員）',
     description:
-      'LP ガス販売店向け基幹システム（SILPS）の開発・保守・次期バージョン開発を担当。' +
+      'LPガス販売店向け基幹システムの開発・保守・次期バージョン開発を担当。' +
       '要件定義から運用保守まで一気通貫でフルスタック対応。' +
       'PHP / AngularJS / SQL Server による Web 系業務システムの開発・機能追加も兼務。' +
       '生成 AI（Claude Code / GitHub Copilot）の社内導入を主導し開発効率化を推進。' +
@@ -77,40 +77,56 @@ export const career = [
 
 // 資格
 export const qualifications = [
-  { name: 'LP ガス保安業務員',                          year: '2023.12' },
+  { name: 'LP ガス保安業務員', year: '2023.12' },
   { name: 'Java プログラミング能力認定試験 2 級（サーティファイ）', year: '2016.09' },
-  { name: 'Web クリエイター能力認定試験 上級（サーティファイ）',   year: '2016.06' },
-  { name: '普通自動車第一種運転免許',                       year: '2005.05' },
+  { name: 'Web クリエイター能力認定試験 上級（サーティファイ）', year: '2016.06' },
+  { name: '普通自動車第一種運転免許', year: '2005.05' },
 ];
 
 // 制作実績
 export const works = [
+  // 業務で開発
   {
     num: '01',
-    title: 'SILPS — LPG 販売管理システム',
-    description:
-      '沖縄情報システム㈱での主要プロジェクト。' +
-      'Access VBA + SQL Server による LPG 販売・配送管理システムの新規開発。' +
-      '帳票出力・発注書自動生成・在庫管理機能を含む大規模業務システム。',
-    stack: ['Access VBA', 'SQL Server', 'PHP'],
-    url: '',          // GitHub Pages URL（後から設定）
+    category: '業務',
+    title: 'LPガス販売管理システム',
+    description: 'LPガス販売店の業務（顧客/売上請求/検針/配送/保安/ハンディ端末/他）全般を管理するシステム。',
+    stack: ['Access VBA', 'SQL Server', 'PHP', 'HTML', 'CSS', 'Anymore'],
+    devices: ['PC', 'TABLET', 'MOBILE'],
+    url: '',
     tag: 'Business System',
+  },
+  // 個人開発
+  {
+    num: '01',
+    category: '個人開発',
+    title: 'Map!t（マップイット）',
+    description: '付箋とホワイトボードを活用してマインドマップやワークフローを視覚的に整理する会議補助ツール。',
+    stack: ['TypeScript', 'CSS', 'Gemini API'],
+    devices: ['PC'],
+    urls: [
+      { label: 'Google AI Studio', url: 'https://ai.studio/apps/64df31cc-8e9c-49ed-bd66-f5bd1cae16f4?fullscreenApplet=true' },
+      { label: 'GitHub Pages', url: 'https://h-nema-oknw.github.io/Mapit' },
+    ],
+    tag: 'Personal Tool',
   },
   {
     num: '02',
-    title: 'OIS-Web — 業務 Web システム',
-    description:
-      'PHP / AngularJS / SQL Server による社内向け Web 業務システム。' +
-      '複数部門の業務フローをシステム化し、運用効率を向上させた。',
-    stack: ['PHP', 'AngularJS', 'SQL Server', 'HTML / CSS'],
-    url: '',          // GitHub Pages URL（後から設定）
-    tag: 'Web System',
+    category: '個人開発',
+    title: 'HTMLマニュアルエディタ',
+    description: 'HTMLで作成されたページ（マニュアル）をノーコードで編集するツール。',
+    stack: ['TypeScript', 'HTML', 'CSS'],
+    devices: ['PC'],
+    urls: [
+      { label: 'GitHub Pages', url: 'https://h-nema-oknw.github.io/HTMLManualEditor/' },
+    ],
+    tag: 'Personal Tool',
   },
 ];
 
 // リンク
 export const links = [
-  { label: 'GitHub',    url: 'https://github.com/h-nema-oknw',          icon: 'github'   },
-  { label: 'Wantedly', url: 'https://www.wantedly.com/id/hiroki_nema',  icon: 'wantedly' },
-  { label: 'Email',    url: 'mailto:drunkhouse.k29h@gmail.com',         icon: 'mail'     },
+  { label: 'GitHub', url: 'https://github.com/h-nema-oknw', icon: 'github' },
+  { label: 'Wantedly', url: 'https://www.wantedly.com/id/hiroki_nema', icon: 'wantedly' },
+  { label: 'Email', url: 'mailto:drunkhouse.k29h@gmail.com', icon: 'mail' },
 ];

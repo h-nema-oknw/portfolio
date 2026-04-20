@@ -51,7 +51,7 @@ Phase 4 レポートより:
 | B2 | ダークモード切替の目視確認 | ブラウザの視覚確認が必要 |
 | B3 | PC・タブレット・スマートフォンのレスポンシブ目視確認 | 実機 / DevTools による確認が必要 |
 | B4 | Chrome・Firefox・Safari・Edge クロスブラウザ確認 | 各ブラウザが必要 |
-| B5 | GitHub Actions デプロイ確認 | main への push が必要（エージェントは main に直接 push 禁止） |
+| B5 | デプロイ実施 | `result/portfolio/dist/` の中身を `D:\個人用\プライベート\Develop\portfolio\` にコピーし commit + push |
 | B6 | 公開 URL での表示確認 | デプロイ完了後に `https://h-nema-oknw.github.io/portfolio/` にアクセス |
 
 ---

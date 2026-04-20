@@ -1,14 +1,12 @@
-name: Deploy to GitHub Pages
+name: Build Check
 
 on:
   push:
     branches: [main]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -24,8 +22,3 @@ jobs:
       - name: Build
         working-directory: result/portfolio
         run: npm run build
-
-      - uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: result/portfolio/dist

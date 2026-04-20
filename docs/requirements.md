@@ -14,7 +14,7 @@
 ## ゴール・成功基準
 
 ### 最重要ゴール（最優先）
-転職活動・副業獲得の場面で先方に共有できる、デザイン性と個性を兼ね備えたポートフォリオを GitHub Pages（`~/portfolio`）で公開する
+転職活動・副業獲得の場面で先方に共有できる、デザイン性と個性を兼ね備えたポートフォリオを GitHub Pages（`https://h-nema-oknw.github.io/portfolio/`）で公開する
 
 ### マイルストーン別ゴール
 
@@ -81,7 +81,10 @@
 ## 制約・前提条件
 
 - ホスティングは GitHub Pages に限定（静的ファイルのみ）
-- リポジトリ URL: `~/portfolio`（`username.github.io/portfolio`）
+- 開発リポジトリ: `dev_Portfolio`（非公開・Vite ソースコード管理）
+- 公開リポジトリ: `portfolio`（公開・GitHub Pages 配信専用）
+- 公開 URL: `https://h-nema-oknw.github.io/portfolio/`
+- デプロイ方法: `dev_Portfolio` でビルドした `dist/` を `portfolio` ローカルディレクトリへコピー後、commit + push
 - 開発・保守は根間本人（1名）
 - 公開希望日は未定（早いほど良い）
 - コーディング規約・命名規則の指定なし（標準慣例に準拠）

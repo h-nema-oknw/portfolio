@@ -4,6 +4,67 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+function extractLineData(terminal) {
+  return [...terminal.querySelectorAll(':scope > div')].map(div => ({
+    style: div.getAttribute('style') || '',
+    tokens: [...div.childNodes]
+      .filter(n => !(n.classList && n.classList.contains('t-cursor')))
+      .flatMap(n => {
+        if (n.nodeType === Node.TEXT_NODE) {
+          return n.textContent ? [{ cls: '', text: n.textContent }] : [];
+        }
+        return n.textContent ? [{ cls: n.className || '', text: n.textContent }] : [];
+      }),
+  }));
+}
+
+function startTypewriter(terminal, lineData) {
+  // 総ステップ数から「3秒で完了」する1ステップあたりの遅延を算出
+  const totalSteps = lineData.reduce((sum, line) => {
+    const chars = line.tokens.reduce((s, tok) => s + tok.text.length, 0);
+    return sum + Math.max(chars, 1);
+  }, 0);
+  const stepDelay = Math.max(8, Math.floor(3000 / totalSteps));
+
+  let li = 0, ti = 0, ci = 0;
+  let currentDiv = null, currentSpanEl = null;
+  const cursor = terminal.querySelector('.t-cursor');
+
+  function step() {
+    if (li >= lineData.length) return;
+    const line = lineData[li];
+
+    if (ti === 0 && ci === 0) {
+      cursor.remove();
+      currentDiv = document.createElement('div');
+      if (line.style) currentDiv.setAttribute('style', line.style);
+      terminal.appendChild(currentDiv);
+      currentDiv.appendChild(cursor);
+    }
+
+    if (!line.tokens.length) { li++; return setTimeout(step, stepDelay); }
+
+    const tok = line.tokens[ti];
+    if (ci === 0) {
+      currentSpanEl = document.createElement('span');
+      if (tok.cls) currentSpanEl.className = tok.cls;
+      cursor.before(currentSpanEl);
+    }
+
+    currentSpanEl.textContent = tok.text.slice(0, ci + 1);
+
+    ci++;
+    if (ci >= tok.text.length) {
+      ci = 0; ti++;
+      if (ti >= line.tokens.length) { ti = 0; li++; }
+    }
+    setTimeout(step, stepDelay);
+  }
+
+  // フェードイン完了 1 秒後にタイピング開始
+  setTimeout(step, 1000);
+}
+
 export function initAnimations() {
 
   // ── 初期状態セットアップ ─────────────────────────────────────
@@ -66,11 +127,24 @@ export function initAnimations() {
     });
   });
 
-  // ── ターミナル
+  // ── ターミナル: ページロード時点でコンテンツを抽出して空にする
+  const terminalMap = new Map();
+  gsap.utils.toArray('.terminal').forEach(el => {
+    const lineData = extractLineData(el);
+    terminalMap.set(el, lineData);
+    el.innerHTML = '';
+    const cursor = document.createElement('span');
+    cursor.className = 't-cursor';
+    cursor.textContent = '_';
+    el.appendChild(cursor);
+  });
+
+  // スクロールでフェードイン → 完了後タイプライター開始
   gsap.utils.toArray('.terminal').forEach(el => {
     gsap.to(el, {
       opacity: 1, y: 0, duration: 0.8,
       scrollTrigger: { trigger: el, start: 'top 88%' },
+      onComplete: () => startTypewriter(el, terminalMap.get(el)),
     });
   });
 

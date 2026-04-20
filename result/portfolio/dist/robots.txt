@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://h-nema-oknw.github.io/portfolio/sitemap.xml

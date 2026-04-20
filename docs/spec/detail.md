@@ -168,34 +168,39 @@ export const links = [
 | 項目 | 内容 |
 |---|---|
 | ホスティングサービス | GitHub Pages |
-| リポジトリ名 | `portfolio` |
-| 公開 URL | `https://{username}.github.io/portfolio/` |
-| デプロイ方法 | GitHub Actions（`main` ブランチへの push で自動実行） |
-| 対象ブランチ | `main`（開発） → `gh-pages`（公開） |
+| 開発リポジトリ | `dev_Portfolio`（非公開） |
+| 公開リポジトリ | `portfolio`（公開・GitHub Pages 用） |
+| 公開 URL | `https://h-nema-oknw.github.io/portfolio/` |
+| デプロイ方法 | 手動: `dev_Portfolio` でビルド → `portfolio` ローカルディレクトリにコピー → commit + push |
+| 対象ブランチ | `portfolio` の `main` ブランチ（GitHub Pages の配信元） |
 | ビルドコマンド | `npm run build` |
 | 出力ディレクトリ | `dist/` |
 | Vite base 設定 | `/portfolio/` |
 
 ### GitHub Actions ワークフロー概要（`.github/workflows/deploy.yml`）
 
+`dev_Portfolio` のビルド確認（CI）のみ実行。デプロイは手動で行う。
+
 ```yaml
 on:
   push:
     branches: [main]
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
-      - run: npm ci
-      - run: npm run build
-      - uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+      - name: Install dependencies
+        working-directory: result/portfolio
+        run: npm ci
+      - name: Build
+        working-directory: result/portfolio
+        run: npm run build
 ```
+
+> デプロイ手順: `result/portfolio/dist/` の中身を `D:\個人用\プライベート\Develop\portfolio\` にコピーし、commit + push する。
 
 ---
 

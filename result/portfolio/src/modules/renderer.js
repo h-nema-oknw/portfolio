@@ -59,22 +59,41 @@ function renderCareer() {
 function renderWorks() {
   const list = document.querySelector('.works-list');
   if (!list) return;
-  list.innerHTML = works.map(w => {
+
+  const groups = {};
+  const order = [];
+  works.forEach(w => {
+    const cat = w.category || '';
+    if (!groups[cat]) { groups[cat] = []; order.push(cat); }
+    groups[cat].push(w);
+  });
+
+  const renderItem = w => {
+    const urlLinks = w.urls
+      ? `<div class="w-links">${w.urls.map(u => `<a href="${u.url}" target="_blank" rel="noopener noreferrer" class="w-link">${u.label} →</a>`).join('')}</div>`
+      : '';
     const inner = `
       <span class="w-num">${w.num}</span>
       <div>
         <div class="w-title">${w.title}</div>
-        <div class="w-sub">${w.stack.join(' + ')}</div>
+        ${w.description ? `<div class="w-sub">${w.description}</div>` : ''}
         <div class="w-stack">
           ${w.stack.map(s => `<span class="tag">${s}</span>`).join('')}
         </div>
+        ${w.devices ? `<div class="w-devices">${w.devices.map(d => `<span class="w-device">${d}</span>`).join('')}</div>` : ''}
+        ${urlLinks}
       </div>
       <span class="w-tag">${w.tag}</span>
     `;
     return w.url
       ? `<a href="${w.url}" target="_blank" rel="noopener noreferrer" class="work-item">${inner}</a>`
       : `<div class="work-item">${inner}</div>`;
-  }).join('');
+  };
+
+  list.innerHTML = order.map(cat => `
+    <div class="works-category">${cat}</div>
+    ${groups[cat].map(renderItem).join('')}
+  `).join('');
 }
 
 function renderLinks() {

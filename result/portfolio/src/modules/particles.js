@@ -114,8 +114,7 @@ export function initParticles() {
 
   window.addEventListener('scroll', () => {
     const delta = window.scrollY - lastScrollY;
-    // 逆方向 = delta > 0（下スクロール）→ 粒子は上（正 Y）
-    vel.y += (delta / window.innerHeight) * 10 * 0.1;
+    vel.y -= (delta / window.innerHeight) * 10 * 0.1;
     lastScrollY = window.scrollY;
   });
 
