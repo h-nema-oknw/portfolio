@@ -1,0 +1,12 @@
+# 開発用ファイル（非公開）
+agents/
+docs/
+reports/
+.claude/
+config/
+help.md
+CLAUDE.md
+dev.ps1
+
+# 依存パッケージ
+result/portfolio/node_modules/
