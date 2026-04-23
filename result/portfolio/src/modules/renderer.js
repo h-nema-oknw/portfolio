@@ -33,7 +33,7 @@ function renderCareer() {
       <div class="career-body">
         <div class="career-company">${c.company}</div>
         <div class="career-role">${c.role}</div>
-        <p class="career-desc">${c.description}</p>
+        <p class="career-desc"${c.nosnippet ? ' data-nosnippet' : ''}>${c.description}</p>
         <div class="career-tags">
           ${c.tags.map(t => `<span class="tag">${t}</span>`).join('')}
         </div>

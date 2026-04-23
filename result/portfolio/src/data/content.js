@@ -64,6 +64,7 @@ export const career = [
       'インストラクターとして生徒への指導・教育も経験。' +
       'この経験が後の研修講師・プレゼンテーション能力の基盤となっている。',
     tags: ['Dance', 'Instruction', 'Education'],
+    nosnippet: true,
   },
   {
     period: '2009.04 — 2013.03',
@@ -72,6 +73,7 @@ export const career = [
     description:
       '国際コミュニケーションを専攻。在学中よりストリートダンス活動を並行し、卒業後はダンサーとしてのキャリアをスタート。',
     tags: ['Communication', 'International Studies'],
+    nosnippet: true,
   },
 ];
 
