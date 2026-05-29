@@ -107,13 +107,24 @@ export const works = [
     stack: ['TypeScript', 'CSS', 'Gemini API'],
     devices: ['PC'],
     urls: [
-      { label: 'Google AI Studio', url: 'https://ai.studio/apps/64df31cc-8e9c-49ed-bd66-f5bd1cae16f4?fullscreenApplet=true' },
       { label: 'GitHub Pages', url: 'https://h-nema-oknw.github.io/Mapit' },
     ],
     tag: 'Personal Tool',
   },
   {
     num: '02',
+    category: '個人開発',
+    title: 'DBEW（データベース仕様書作成ツール）',
+    description: 'データベースの論理設計・テーブル定義・ER図をブラウザ上で作成・管理するツール。',
+    stack: ['TypeScript', 'HTML', 'CSS'],
+    devices: ['PC'],
+    urls: [
+      { label: 'GitHub Pages', url: 'https://h-nema-oknw.github.io/DBEW/' },
+    ],
+    tag: 'Personal Tool',
+  },
+  {
+    num: '03',
     category: '個人開発',
     title: 'HTMLマニュアルエディタ',
     description: 'HTMLで作成されたページ（マニュアル）をノーコードで編集するツール。',
