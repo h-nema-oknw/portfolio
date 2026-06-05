@@ -135,6 +135,18 @@ export const works = [
     ],
     tag: 'Personal Tool',
   },
+  {
+    num: '04',
+    category: '個人開発',
+    title: 'STAMON — Sprite Sheet Editor',
+    description: 'スプライトシートの書き出し設定（サイズ・余白・カラム数など）をリアルタイムにプレビューしながら調整できるブラウザ完結型ツール。',
+    stack: ['React', 'JavaScript', 'CSS'],
+    devices: ['PC'],
+    urls: [
+      { label: 'GitHub Pages', url: 'https://h-nema-oknw.github.io/stamon_SpriteSheetEditor/' },
+    ],
+    tag: 'Personal Tool',
+  },
 ];
 
 // リンク
